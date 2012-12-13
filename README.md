@@ -1,4 +1,4 @@
 node.sample.blog
 ================
 
-Node.js sample blog setup. In progress
+Node.js sample blog setup. In progress.
