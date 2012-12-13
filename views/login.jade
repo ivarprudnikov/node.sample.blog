@@ -1,0 +1,17 @@
+extends layout
+
+block content
+
+    section#login
+        form(action="/login",method="post")
+            label Username
+            input(type='text',name='username')
+
+            label Password
+            input(type='password',name='password')
+
+            input(type='submit', value='Submit')
+
+        p Hint - bob:secret
+
+    script(type="text/javascript", src="js/main.js")

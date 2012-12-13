@@ -1,0 +1,26 @@
+{
+    "name": "nodejs.sample.blog",
+    "author": "Ivar Prudnikov <aprudnikovas@yahoo.com>",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "start": "node app"
+    },
+    "dependencies": {
+        "express": "*"
+        , "connect-flash": "*"
+        , "mongodb": ">=*"
+        , "mongoose": "*"
+        , "jade": "*"
+        , "underscore": "*"
+        , "passport" : "*"
+        , "passport-local" : "*"
+        , "bcrypt" : "*"
+    },
+	"devDependencies": {
+		
+	},
+	"engines": {
+		"node": ">=0.8"
+	}
+}
