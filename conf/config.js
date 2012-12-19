@@ -19,20 +19,9 @@
 
         app.configure(function () {
             app.set('appRoot', path.resolve( __dirname, ".." ) );
-
             app.set('views', path.join(app.settings.appRoot, "views"));
             app.set('view engine', 'jade');
-
             app.use(express.static(path.join(app.settings.appRoot, "public")));
-
-            /* before passport
-            app.use(express.favicon());
-            app.use(express.cookieParser('keyboard cat'));
-            app.use(express.bodyParser());
-            app.use(express.methodOverride());
-            app.use(app.router);
-            */
-
             app.use(express.logger());
             app.use(express.favicon());
             app.use(express.cookieParser());

@@ -9,11 +9,26 @@
 
     "use strict";
 
-    var mongoose = require('mongoose')
-        , Article = mongoose.model('Article')
-        , User = mongoose.model('User');
+    var mongoose = require('mongoose');
 
     exports.init = function (app) {
+
+        var Article = mongoose.model('Article')
+            , User = mongoose.model('User');
+
+        var createDevUsers = function(){
+            User.findOne({username:'funny'},function(err,user){
+                if(err){
+                    new User({username:'funny',password:'man'}).save(function(err){
+                        if(err) throw err;
+                        else console.log('User saved');
+                    });
+                } else {
+                    console.log("user already exists");
+                }
+            });
+
+        };
 
         console.log("Running bootstrap.js");
 
@@ -35,11 +50,5 @@
 
     };
 
-    var createDevUsers = function(){
-        new User({username:'funny',password:'man'}).save(function(err){
-            if(err) throw err;
-            else console.log('User saved');
-        });
-    };
 
 }(exports));

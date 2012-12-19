@@ -8,7 +8,7 @@
 
         app.get('/', function (req, res) {
 
-            var response = {'title': 'My Blog'};
+            var response = {'title': 'My Blog', user: req.user};
 
             return res.format({
 

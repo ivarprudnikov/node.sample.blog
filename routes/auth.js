@@ -2,28 +2,27 @@
 
     "use strict";
 
-    var authentication = require('../services/authentication')
-        , passport = require('passport')
+    var passport = require('passport')
         , flash = require('connect-flash')
-        , util = require('util');
+        , util = require('util')
+        , def = require('../conf/vars');
 
     exports.init = function (app) {
 
-        authentication.init(app);
-
         app.get('/login', function(req, res){
-            res.render('login', { user: req.user, message: req.flash('error') });
+            if (req.user) res.redirect(def.vars.successRedirect);
+            else res.render('login', { user: req.user, message: req.flash('error') });
         });
 
-        app.post('/login',
-            passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
-            function(req, res) {
-                res.redirect('/');
+        app.post('/login'
+            , passport.authenticate('local', { failureRedirect: def.vars.errorRedirect, failureFlash: true })
+            , function(req, res) {
+                res.redirect(def.vars.successRedirect);
         });
 
         app.get('/logout', function(req, res){
             req.logout();
-            res.redirect('/');
+            res.redirect(def.vars.logoutRedirect);
         });
 
     };
