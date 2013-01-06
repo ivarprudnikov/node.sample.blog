@@ -3,14 +3,19 @@
     "use strict";
 
     var mongoose = require('mongoose')
+        , _ = require('underscore')
         , bcrypt = require('bcrypt')
         , SALT_WORK_FACTOR = 10
-        , UserSchema;
+        , UserSchema
+        , ObjectId = mongoose.Schema.ObjectId;
 
     UserSchema = new mongoose.Schema({
-        username: { type: String, required: true, index: { unique: true } },
-        password: { type: String, required: true }
+        username: { type: String, required: true, index: { unique: true } }
+        , password: { type: String, required: true }
+        , authorities: [ ObjectId ]
     });
+
+
 
     UserSchema.pre('save', function(next) {
         var user = this;
@@ -42,6 +47,6 @@
         });
     };
 
-    module.exports = mongoose.model('User', UserSchema);
+    module.exports = mongoose.model('User', UserSchema)
 
 }(module));

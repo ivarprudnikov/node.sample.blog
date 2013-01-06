@@ -9,25 +9,47 @@
 
     "use strict";
 
-    var mongoose = require('mongoose');
+    var mongoose = require('mongoose')
+        , _ = require('underscore');
 
     exports.init = function (app) {
 
         var Article = mongoose.model('Article')
-            , User = mongoose.model('User');
+            , User = mongoose.model('User')
+            , Role = mongoose.model('Role');
 
-        var createDevUsers = function(){
-            User.findOne({username:'funny'},function(err,user){
-                if(err){
-                    new User({username:'funny',password:'man'}).save(function(err){
+        var createDevRoles = function(cb){
+            var roles = ['USER','ADMIN','SUPERADMIN'];
+
+            var x = roles.length
+            _.each(roles,function(v){
+                Role.findOneAndRemove({authority:v},function(){
+                    new Role({authority:v}).save(function(err){
                         if(err) throw err;
-                        else console.log('User saved');
+                        else console.log('Role ' + v + ' saved');
+                        x--;
+                        if(x==0)
+                            return cb();
                     });
-                } else {
-                    console.log("user already exists");
-                }
+                });
             });
 
+        };
+
+        var createDevUsers = function(){
+            var users = [{u:'admin',p:'admin',r:'ADMIN'},{u:'superadmin',p:'superadmin',r:'SUPERADMIN'}];
+            _.each(users,function(v){
+                User.findOneAndRemove({username:v.u},function(err,cb){
+                    if(err) throw err;
+                    var role = Role.findOne({authority:v.r},function(err,result){
+                        var u = new User({username:v.u,password:v.p,authorities:[result._id]});
+                        u.save(function(err){
+                            if(err) throw err;
+                            else console.log('User ' + v.u + ' saved');
+                        });
+                    });
+                });
+            });
         };
 
         console.log("Running bootstrap.js");
@@ -41,7 +63,7 @@
         });
 
         app.configure('development', function(){
-            createDevUsers();
+            createDevRoles( createDevUsers );
         });
 
         app.configure('production', function(){

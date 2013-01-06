@@ -1,7 +1,10 @@
 !!! 5
 html
     head
-        title My Blog
+        - if (locals.title)
+            title #{title}
+        - else
+            title My Blog
         link(rel='stylesheet', href='/css/main.css')
         script(type="text/javascript", src="/js/plugins/jquery-1.7.2.min.js")
         script(type="text/javascript", src="/js/plugins/underscore-min.js")
@@ -9,16 +12,21 @@ html
 
     body
 
-        div
-            - if (locals.message)
-                p #{message}
+        header
+            nav
+                - if (locals.user)
+                    span Hi, #{user.username}
+                a(href="/") Home
+                a(href="/article") Blog
+                - if (!locals.user)
+                    a(href="/login") Login
+                - else
+                    a(href="/account") Account
+                    a(href="/logout") Logout
 
-        div
-            a(href="/") Home
-            - if (!locals.user)
-                a(href="/login") Login
-            - else
-                a(href="/account") Account
-                a(href="/logout") Logout
+
+        // Any flash/nonflash messages will appear in this block
+        - if (locals.message)
+            section #{message}
 
         block content
