@@ -10,7 +10,9 @@
     "use strict";
 
     var mongoose = require('mongoose')
-        , _ = require('underscore');
+        , _ = require('underscore')
+        , vars = require('./vars')
+        , roles = vars.ROLES;
 
     exports.init = function (app) {
 
@@ -19,9 +21,8 @@
             , Role = mongoose.model('Role');
 
         var createDevRoles = function(cb){
-            var roles = ['USER','ADMIN','SUPERADMIN'];
 
-            var x = roles.length
+            var x = roles.length;
             _.each(roles,function(v){
                 Role.findOneAndRemove({authority:v},function(){
                     new Role({authority:v}).save(function(err){

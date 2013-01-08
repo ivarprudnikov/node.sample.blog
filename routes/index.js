@@ -2,7 +2,8 @@
 
     "use strict";
 
-    var mongoose = require('mongoose');
+    var mongoose = require('mongoose')
+        , auth = require('../services/authentication');
 
     exports.init = function (app) {
 
@@ -24,7 +25,7 @@
 
         });
 
-        app.get('/account', function (req, res) {
+        app.get('/account', auth.requireADMIN, function (req, res) {
 
             var response = {'title': 'Account', user: req.user};
 
@@ -41,6 +42,8 @@
             });
 
         });
+
+
 
     };
 

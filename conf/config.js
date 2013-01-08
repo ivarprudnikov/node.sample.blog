@@ -11,7 +11,8 @@
     var express = require("express")
         , path = require('path')
         , passport = require('passport')
-        , flash = require('connect-flash');
+        , flash = require('connect-flash')
+        , vars = require('./vars');
 
     exports.init = function (app) {
 
@@ -32,7 +33,6 @@
             app.use(passport.initialize());
             app.use(passport.session());
             app.use(app.router);
-
         });
 
         console.log("app root : " + app.settings.appRoot );

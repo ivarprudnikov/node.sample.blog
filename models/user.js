@@ -15,8 +15,6 @@
         , authorities: [ ObjectId ]
     });
 
-
-
     UserSchema.pre('save', function(next) {
         var user = this;
 

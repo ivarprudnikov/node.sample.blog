@@ -14,7 +14,7 @@
 
     exports.init = function () {
 
-        var User = mongoose.model('User')
+        var User = mongoose.model('User');
 
         console.log("Running authConfig.js");
 
