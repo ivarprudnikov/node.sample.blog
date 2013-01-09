@@ -38,11 +38,15 @@
         };
 
         var createDevUsers = function(){
-            var users = [{u:'admin',p:'admin',r:'ADMIN'},{u:'superadmin',p:'superadmin',r:'SUPERADMIN'}];
+            var users = [
+                {u:'user',p:'user',r:'USER'}
+                , {u:'admin',p:'admin',r:'ADMIN'}
+                , {u:'superadmin',p:'superadmin',r:'SUPERADMIN'}
+            ];
             _.each(users,function(v){
-                User.findOneAndRemove({username:v.u},function(err,cb){
+                User.findOneAndRemove({username:v.u},function(err){
                     if(err) throw err;
-                    var role = Role.findOne({authority:v.r},function(err,result){
+                    Role.findOne({authority:v.r},function(err,result){
                         var u = new User({username:v.u,password:v.p,authorities:[result._id]});
                         u.save(function(err){
                             if(err) throw err;

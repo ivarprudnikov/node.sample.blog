@@ -11,7 +11,7 @@
 
         app.get('/login', function(req, res){
             if (req.user) res.redirect(vars.successRedirect);
-            else res.render('login', { user: req.user, message: req.flash('error') });
+            else res.render('login', { user: req.user, messages:req.flash() });
         });
 
         app.post('/login'

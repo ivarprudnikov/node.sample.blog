@@ -26,7 +26,9 @@ html
 
 
         // Any flash/nonflash messages will appear in this block
-        - if (locals.message)
-            section #{message}
+        - if (locals.messages && locals.messages.error)
+            section Error : #{locals.messages.error}
+        - if (locals.messages && locals.messages.info)
+            section Info : #{locals.messages.info}
 
         block content

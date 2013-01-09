@@ -3,13 +3,14 @@
     "use strict";
 
     var mongoose = require('mongoose')
+        , flash = require('connect-flash')
         , auth = require('../services/authentication');
 
     exports.init = function (app) {
 
         app.get('/', function (req, res) {
 
-            var response = {'title': 'Blog', user: req.user};
+            var response = {'title': 'Blog', user: req.user, messages:req.flash()};
 
             return res.format({
 
@@ -25,9 +26,9 @@
 
         });
 
-        app.get('/account', auth.requireADMIN, function (req, res) {
+        app.get('/account', auth.requireSUPERADMIN, function (req, res) {
 
-            var response = {'title': 'Account', user: req.user};
+            var response = {'title': 'Account', user: req.user, messages:req.flash()};
 
             return res.format({
 
