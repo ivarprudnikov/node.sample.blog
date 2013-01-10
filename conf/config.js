@@ -50,7 +50,7 @@
 
         // production only
         app.configure('production', function(){
-            app.set('portNo',3000);
+            app.set('portNo',process.env.PORT || 5000);
         });
 
     };
