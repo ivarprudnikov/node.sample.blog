@@ -9,6 +9,7 @@ lib-cov
 
 node_modules
 .idea
+.DS_Store
 
 pids
 logs
