@@ -26,7 +26,7 @@
 
         // production only
         app.configure('production', function(){
-            app.set('dbUri', 'mongodb://127.0.0.1/prod_db');
+            app.set('dbUri', process.env.MONGOLAB_URI);
             app.set('dbOptions', { user : '' ,pass : '' });
         });
 
