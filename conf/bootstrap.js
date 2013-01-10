@@ -64,7 +64,7 @@
         });
 
         app.configure('test', function(){
-
+            createDevRoles( createDevUsers );
         });
 
         app.configure('development', function(){
@@ -72,7 +72,7 @@
         });
 
         app.configure('production', function(){
-
+            createDevRoles( createDevUsers );
         });
 
     };
