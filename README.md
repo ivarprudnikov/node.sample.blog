@@ -41,15 +41,15 @@ $ npm start
 3. Create an app from cli while in node.sample.blog directory
 <pre>heroku apps:create myAwesomeNodeApp</pre>
 Will add `heroku` remote to git.
-4. As app relies on mongodb you should add add on to your app in heroku
-<pre>heroku addons:add mongolab:starter</pre>
-or
-<pre>heroku addons:add mongohq:sandbox</pre>
+4. Define environment for your app:
+<pre>heroku config:add NODE_ENV=production</pre>
+5. As app relies on mongodb you should add add on to your app in heroku
+<pre>heroku addons:add mongolab:starter</pre> or `heroku addons:add mongohq:sandbox`
 Note: as these add ons are free, but in my case I had to verify account with credit card details.
-5. Now just push to heroku
+6. Now just push to heroku
 <pre>git push heroku master</pre>
-6. To open app in the browser <pre>heroku open</pre> (should be myAwesomeNodeApp.heroku.com),
-to check running process <pre>heroku ps</pre>, to see logs <pre>heroku logs</pre>
+7. To open app in the browser `heroku open` (should be myAwesomeNodeApp.heroku.com),
+to check running process `heroku ps`, to see logs `heroku logs`
 
 ## Credit
 
