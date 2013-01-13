@@ -30,7 +30,7 @@ $ sudo npm install
 
 1. Make sure your current directory is nodejs.sample.blog:
 <pre>
-$ node app
+$ npm start
 </pre>
 2. Visit [http://localhost:3000](http://localhost:3000) in a web browser.
 
