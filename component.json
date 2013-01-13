@@ -2,6 +2,9 @@
   "name": "node.sample.blog",
   "version": "0.0.0",
   "dependencies": {
-    "bootstrap": "~2.2.2"
+    "bootstrap": "~2.2.2",
+    "jquery": "~1.8.3",
+    "backbone": "~0.9.9",
+    "underscore": "~1.4.3"
   }
 }

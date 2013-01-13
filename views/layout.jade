@@ -5,31 +5,35 @@ html
             title #{title}
         - else
             title My Blog
-        link(rel='stylesheet', href='css/dependencies/bootstrap/less/bootstrap.css')
-        link(rel='stylesheet', href='css/dependencies/bootstrap/less/responsive.css')
-        script(type="text/javascript", src="/js/plugins/jquery-1.7.2.min.js")
-        script(type="text/javascript", src="/js/plugins/underscore-min.js")
-        script(type="text/javascript", src="/js/plugins/backbone-min.js")
+        link(rel='stylesheet', href='stylesheets/styles.css')
 
     body
 
-        header
-            nav
-                - if (locals.user)
-                    span Hi, #{user.username}
-                a(href="/") Home
-                a(href="/article") Blog
+        header.navbar: nav.navbar-inner: .container
+            a.brand mySuperSimpleNodeBlog
+            ul.nav
+                li: a(href="/") Home
+                li: a(href="/article") Blog
+            ul.nav.pull-right
                 - if (!locals.user)
-                    a(href="/login") Login
+                    li: a(href="/login") Login
                 - else
-                    a(href="/account") Account
-                    a(href="/logout") Logout
+                    li: span.navbar-text Hi, #{user.username}
+                    li: a(href="/account") Account
+                    li: a(href="/logout") Logout
 
 
-        // Any flash/nonflash messages will appear in this block
-        - if (locals.messages && locals.messages.error)
-            section Error : #{locals.messages.error}
-        - if (locals.messages && locals.messages.info)
-            section Info : #{locals.messages.info}
 
-        block content
+
+
+        section.container
+            // Any flash/nonflash messages will appear in this block
+            - if (locals.messages && locals.messages.error)
+                .alert.alert-error Error : #{locals.messages.error}
+            - if (locals.messages && locals.messages.info)
+                .alert.alert-info Info : #{locals.messages.info}
+
+            block content
+
+
+        script(src="")

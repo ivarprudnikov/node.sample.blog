@@ -24,7 +24,6 @@
             app.set('views', path.join(app.settings.appRoot, "views"));
             app.set('view engine', 'jade');
             app.use(lessMiddleware({
-                dest: path.join(app.settings.appRoot, "public/css"),
                 src: path.join(app.settings.appRoot, "public"),
                 compress: true
             }));
