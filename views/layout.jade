@@ -9,16 +9,17 @@ html
 
     body
 
-        header.navbar: nav.navbar-inner: .container
-            a.brand mySuperSimpleNodeBlog
-            ul.nav
+        header.navbar.navbar-fixed-top: nav.navbar-inner: .container
+            a.brand(href='/') mySuperSimpleNodeBlog
+            ul.nav.pull-right
+                - if (locals.user)
+                    li: span.navbar-text Hi, #{user.username}
                 li: a(href="/") Home
                 li: a(href="/article") Blog
-            ul.nav.pull-right
+                li.divider-vertical
                 - if (!locals.user)
                     li: a(href="/login") Login
                 - else
-                    li: span.navbar-text Hi, #{user.username}
                     li: a(href="/account") Account
                     li: a(href="/logout") Logout
 
@@ -35,5 +36,7 @@ html
 
             block content
 
-
-        script(src="")
+        script(src="dependencies/jquery/jquery.min.js")
+        script(src="dependencies/underscore/underscore-min.js")
+        script(src="dependencies/backbone/backbone-min.js")
+        script(src="js/main.js")

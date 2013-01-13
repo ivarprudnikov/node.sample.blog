@@ -3,15 +3,21 @@ extends layout
 block content
 
     section#login
-        form(action="/login",method="post")
-            label Username
-            input(type='text',name='username')
 
-            label Password
-            input(type='password',name='password')
+        h1 Log in
 
-            input(type='submit', value='Submit')
+        form(action="/login",method="post").form-horizontal
+            .control-group
+                label(for="username").control-label Username
+                .controls
+                    input(type='text',name='username')#username
 
-        p Hint - user:user or admin:admin or auperadmin:superadmin, each has corresponding role
+            .control-group
+                label(for="password").control-label Password
+                .controls
+                    input(type='password',name='password')#password
 
-    script(type="text/javascript", src="js/main.js")
+            .form-actions
+                input(type='submit', value='Submit').btn.btn-primary
+
+        p.alert.alert-info Hint - user:user or admin:admin or superadmin:superadmin, each has corresponding role
