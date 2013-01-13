@@ -12,7 +12,8 @@
         , path = require('path')
         , passport = require('passport')
         , flash = require('connect-flash')
-        , vars = require('./vars');
+        , vars = require('./vars')
+        , lessMiddleware = require('less-middleware');
 
     exports.init = function (app) {
 
@@ -22,6 +23,11 @@
             app.set('appRoot', path.resolve( __dirname, ".." ) );
             app.set('views', path.join(app.settings.appRoot, "views"));
             app.set('view engine', 'jade');
+            app.use(lessMiddleware({
+                dest: path.join(app.settings.appRoot, "public/css"),
+                src: path.join(app.settings.appRoot, "public"),
+                compress: true
+            }));
             app.use(express.static(path.join(app.settings.appRoot, "public")));
             app.use(express.logger());
             app.use(express.favicon());

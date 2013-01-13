@@ -1,27 +1,27 @@
 {
-    "name": "node.sample.blog",
-    "author": "Ivar Prudnikov <aprudnikovas@yahoo.com>",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node app"
-    },
-    "dependencies": {
-        "express": "*"
-        , "connect-flash": "*"
-        , "mongodb": ">=*"
-        , "mongoose": "*"
-        , "jade": "*"
-        , "underscore": "*"
-        , "passport" : "*"
-        , "passport-local" : "*"
-        , "bcrypt" : "*"
-    },
-	"devDependencies": {
-		
-	},
-	"engines": {
-		"node": ">=0.8"
-        , "npm":  "1.1.x"
-	}
+  "name": "node.sample.blog",
+  "author": "Ivar Prudnikov <aprudnikovas@yahoo.com>",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "prestart": "bower install",
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "*",
+    "connect-flash": "*",
+    "mongodb": ">=*",
+    "mongoose": "*",
+    "jade": "*",
+    "underscore": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "bcrypt": "*",
+    "less-middleware": "~0.1.9"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=0.8",
+    "npm": "1.1.x"
+  }
 }
