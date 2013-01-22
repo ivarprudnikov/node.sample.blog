@@ -1,11 +1,13 @@
 {
   "name": "node.sample.blog",
   "author": "Ivar Prudnikov <aprudnikovas@yahoo.com>",
+  "repository": "git://github.com/aprudnikovas/node.sample.blog",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "prestart": "bower install",
-    "start": "node app"
+    "start": "node app",
+    "test": "make test"
   },
   "dependencies": {
     "express": "*",
@@ -19,7 +21,10 @@
     "bcrypt": "*",
     "less-middleware": "~0.1.9"
   },
-  "devDependencies": {},
+  "devDependencies": {
+      "mocha":"*",
+      "should": "*"
+  },
   "engines": {
     "node": ">=0.8",
     "npm": "1.1.x"

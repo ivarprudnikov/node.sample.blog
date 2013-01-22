@@ -4,38 +4,58 @@
  * Simple auth service
  * */
 
+	"use strict";
+
 var mongoose = require('mongoose')
     , Role = mongoose.model('Role')
     , passport = require('passport')
     , flash = require('connect-flash')
     , util = require('util')
-    , vars = require('../conf/vars');
+    , vars = require('../conf/vars')
+	, roleCompare = require('./roleCompare');
 
 function Authentication(){}
 
 // general authentication case
 Authentication.prototype.ensureAuthenticated = function(req, res, next){
-
     if ( req.isAuthenticated() ) {
         return next();
     }
-
     req.flash('error', vars.errorNoAuthentication);
     res.redirect(vars.errorRedirect);
-
 };
 
-// register `requireROLE` functions
-vars.ROLES.forEach( function(ROLE){
+Authentication.prototype.require = function(ROLE){
 
-    var fnVerb = 'require' + ROLE; // eg: requireADMIN
+    return function(req,res,next){
 
-    Authentication.prototype[fnVerb] = function(req, res, next){
+		var i, j, userRolesIds, hasOne = false;
+
+        function finalAnswer(hasRole){
+            if(hasRole == true) return next();
+
+            req.flash('error', vars.errorNoRole );
+            res.redirect(vars.errorRedirect);
+        }
+
+		function checkArrayOfRoles(arr){
+			for (j = arr.length - 1; j >= 0; --j) {
+				if(arr[j] === ROLE) return true;
+
+				return false;
+			}
+		}
+
+		function check(err,role){
+			if ( role && ( role.authority === ROLE || roleCompare.getLowerRoles(ROLE,checkArrayOfRoles) ) )
+				hasOne = true;
+
+			if(i===0) return finalAnswer(hasOne);
+		}
 
         function checkUserRole(usr){
 
-            var userRolesIds = usr.authorities
-                , hasOne = false;
+            userRolesIds = usr.authorities;
 
             if (!userRolesIds || userRolesIds.length < 1) {
                 req.flash('error', vars.errorNoRole );
@@ -43,22 +63,9 @@ vars.ROLES.forEach( function(ROLE){
                 return false;
             }
 
-            var x = userRolesIds.length;
-
-            function finalAnswer(){
-                if(hasOne) return next();
-
-                req.flash('error', vars.errorNoRole );
-                res.redirect(vars.errorRedirect);
-            }
-
-            userRolesIds.forEach(function(id){
-                Role.findById(id,function(err,role){
-                    if ( role && role.authority == ROLE ) hasOne = true;
-                    --x;
-                    if(x==0) return finalAnswer();
-                });
-            });
+			for (i = userRolesIds.length - 1; i >= 0; --i) {
+				Role.findById(userRolesIds[i],check);
+			}
         }
 
         if ( req.isAuthenticated() && req.user ) {
@@ -67,9 +74,7 @@ vars.ROLES.forEach( function(ROLE){
             req.flash('error', vars.errorNoAuthentication );
             res.redirect(vars.errorRedirect);
         }
-
-    };
-
-});
+    }
+};
 
 module.exports = exports = new Authentication;
