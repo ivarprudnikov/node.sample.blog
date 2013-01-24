@@ -29,28 +29,35 @@ Authentication.prototype.require = function(ROLE){
 
     return function(req,res,next){
 
-		var i, j, userRolesIds, hasOne = false;
+		var i, j, idx, userRolesIds, userRoles = [];
 
-        function finalAnswer(hasRole){
-            if(hasRole == true) return next();
-
+        function failed(){
             req.flash('error', vars.errorNoRole );
             res.redirect(vars.errorRedirect);
         }
 
-		function checkArrayOfRoles(arr){
-			for (j = arr.length - 1; j >= 0; --j) {
-				if(arr[j] === ROLE) return true;
+		function pushRoles(roleArr){
 
-				return false;
+			userRoles = userRoles.concat(roleArr);
+
+			if(idx === 0 && userRoles.length === 0) return failed();
+			else if (idx===0){
+				for (j = userRoles.length - 1; j >= 0; --j) {
+					if(userRoles[j] === ROLE) return next();
+				}
+				return failed();
 			}
 		}
 
-		function check(err,role){
-			if ( role && ( role.authority === ROLE || roleCompare.getLowerRoles(ROLE,checkArrayOfRoles) ) )
-				hasOne = true;
+		function check(err,roles){
 
-			if(i===0) return finalAnswer(hasOne);
+			if(!roles || roles.length < 1) return failed();
+			for (i = roles.length - 1; i >= 0; --i) {
+				idx = i;
+				if(roles[idx].authority === ROLE) return next();
+				roleCompare.getLowerRoles(roles[idx].authority,pushRoles);
+			}
+
 		}
 
         function checkUserRole(usr){
@@ -63,9 +70,7 @@ Authentication.prototype.require = function(ROLE){
                 return false;
             }
 
-			for (i = userRolesIds.length - 1; i >= 0; --i) {
-				Role.findById(userRolesIds[i],check);
-			}
+			Role.find({'_id':{$in:userRolesIds}},check);
         }
 
         if ( req.isAuthenticated() && req.user ) {

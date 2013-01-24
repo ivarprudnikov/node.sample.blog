@@ -39,9 +39,9 @@
 
         var createDevUsers = function(){
             var users = [
-                {u:'user',p:'user',r:'USER'}
-                , {u:'admin',p:'admin',r:'ADMIN'}
-                , {u:'superadmin',p:'superadmin',r:'SUPERADMIN'}
+                {u:'user',p:'user',r:'ROLE_USER'}
+                , {u:'admin',p:'admin',r:'ROLE_ADMIN'}
+                , {u:'superadmin',p:'superadmin',r:'ROLE_SUPERADMIN'}
             ];
             _.each(users,function(v){
                 User.findOneAndRemove({username:v.u},function(err){
