@@ -26,7 +26,7 @@
 
         });
 
-        app.get('/account', auth.require("ROLE_SUPERADMIN"), function (req, res) {
+        app.get('/account', auth.require("ROLE_ADMIN"), function (req, res) {
 
             var response = {'title': 'Account', user: req.user, messages:req.flash()};
 

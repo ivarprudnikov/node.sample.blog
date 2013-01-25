@@ -22,8 +22,9 @@
     "less-middleware": "~0.1.9"
   },
   "devDependencies": {
-      "mocha":"*",
-      "should": "*"
+    "mocha": "*",
+    "should": "*",
+    "rewire": "~1.0.3"
   },
   "engines": {
     "node": ">=0.8",

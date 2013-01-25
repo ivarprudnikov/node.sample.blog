@@ -11,7 +11,7 @@
     exports.init = function (app) {
 
 
-        app.get('/article', auth.require("ROLE_USER"), function(req, res){
+        app.get('/article', function(req, res){
           return Article.find(function(err, articleList) {
 
               var data = { title: 'Articles', articleList : articleList, user:req.user, messages:req.flash() };
@@ -31,7 +31,7 @@
 
         });
 
-        app.get('/article/:id', auth.require("ROLE_USER"), function(req, res){
+        app.get('/article/:id', function(req, res){
           return Article.findById(req.params.id, function(err, article) {
               if (!err) {
                   return res.send(article);
@@ -39,7 +39,7 @@
           });
         });
 
-        app.get("/article/file/:id", auth.require("ROLE_USER"), function(req, res) {
+        app.get("/article/file/:id", function(req, res) {
             return gridfs.get(req.params.id, function(err, file) {
                 if (err) return console.log("Error : " + err);
                 res.header("Content-Type", file.contentType);
@@ -48,14 +48,14 @@
             });
         });
 
-        app.delete("/article/file/:id", auth.require("ROLE_USER"), function(req, res) {
+        app.delete("/article/file/:id", auth.require("ROLE_ADMIN"), function(req, res) {
             return Article.deleteFile(req.params.id, function(err, file) {
                 if (err) return console.log("Error : " + err);
                 return console.log("Deleted : " + file);
             });
         });
 
-        app.put('/article/:id', auth.require("ROLE_USER"), function(req, res){
+        app.put('/article/:id', auth.require("ROLE_ADMIN"), function(req, res){
           return Article.findById(req.params.id, function(err, article) {
               article.title = req.body.title;
               article.content = req.body.content;
@@ -69,7 +69,7 @@
           });
         });
 
-        app.post('/article', auth.require("ROLE_USER"), function(req, res){
+        app.post('/article', auth.require("ROLE_ADMIN"), function(req, res){
             var article;
             article = new Article({
               title: req.body.title,
@@ -91,7 +91,7 @@
             return res.send(article);
         });
 
-        app.delete('/article/:id', auth.require("ROLE_USER"), function(req, res){
+        app.delete('/article/:id', auth.require("ROLE_ADMIN"), function(req, res){
           return Article.findById(req.params.id, function(err, article) {
               return article.remove(function(err) {
                   if (!err) {

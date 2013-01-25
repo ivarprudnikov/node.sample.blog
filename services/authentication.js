@@ -7,7 +7,6 @@
 	"use strict";
 
 var mongoose = require('mongoose')
-    , Role = mongoose.model('Role')
     , passport = require('passport')
     , flash = require('connect-flash')
     , util = require('util')
@@ -70,7 +69,7 @@ Authentication.prototype.require = function(ROLE){
                 return false;
             }
 
-			Role.find({'_id':{$in:userRolesIds}},check);
+			mongoose.model('Role').find({'_id':{$in:userRolesIds}},check);
         }
 
         if ( req.isAuthenticated() && req.user ) {
