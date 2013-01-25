@@ -1,6 +1,8 @@
 node.sample.blog
 ================
 
+[![Build Status](https://travis-ci.org/aprudnikovas/node.sample.blog.png?branch=master)](https://travis-ci.org/aprudnikovas/node.sample.blog)
+
 ....... In progress ........
 
 ## Introduction
