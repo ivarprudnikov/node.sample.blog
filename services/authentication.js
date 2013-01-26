@@ -26,6 +26,8 @@ Authentication.prototype.ensureAuthenticated = function(req, res, next){
 
 Authentication.prototype.require = function(ROLE){
 
+	if ('string' !== typeof ROLE) throw new Error('ROLE is required');
+
     return function(req,res,next){
 
 		var i, j, idx, userRolesIds, userRoles = [];
@@ -50,10 +52,14 @@ Authentication.prototype.require = function(ROLE){
 
 		function check(err,roles){
 
+			if(err) next(err);
+
 			if(!roles || roles.length < 1) return failed();
+
 			for (i = roles.length - 1; i >= 0; --i) {
 				idx = i;
 				if(roles[idx].authority === ROLE) return next();
+
 				roleCompare.getLowerRoles(roles[idx].authority,pushRoles);
 			}
 
@@ -64,9 +70,7 @@ Authentication.prototype.require = function(ROLE){
             userRolesIds = usr.authorities;
 
             if (!userRolesIds || userRolesIds.length < 1) {
-                req.flash('error', vars.errorNoRole );
-                res.redirect(vars.errorRedirect);
-                return false;
+				return failed();
             }
 
 			mongoose.model('Role').find({'_id':{$in:userRolesIds}},check);
