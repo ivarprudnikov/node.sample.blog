@@ -58,9 +58,10 @@ Authentication.prototype.require = function(ROLE){
 
 			for (i = roles.length - 1; i >= 0; --i) {
 				idx = i;
-				if(roles[idx].authority === ROLE) return next();
-
-				roleCompare.getLowerRoles(roles[idx].authority,pushRoles);
+				if(roles[idx].authority === ROLE)
+					return next();
+				else
+					roleCompare.getLowerRoles( roles[idx].authority, pushRoles );
 			}
 
 		}
