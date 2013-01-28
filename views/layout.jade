@@ -6,6 +6,7 @@ html
         - else
             title My Blog
         link(rel='stylesheet', href='stylesheets/styles.css')
+        link(href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Sans',rel='stylesheet',type='text/css')
 
     body
 
@@ -19,14 +20,17 @@ html
                 - if (!locals.user)
                     li: a(href="/login") Login
                 - else
-                    li: a(href="/account") Account
-                    li: a(href="/logout") Logout
 
+                    li.dropdown
+                        a(href="#", data-toggle="dropdown").dropdown-toggle Account
+                            b.caret
+                        ul.dropdown-menu
+                            li: a(href="/account") Account
+                            li: a(href="/createPost") Add new post
+                            li.divider
+                            li: a(href="/logout") Logout
 
-
-
-
-        section.container
+        section#mainSection.container
             // Any flash/nonflash messages will appear in this block
             - if (locals.messages && locals.messages.error)
                 .alert.alert-error Error : #{locals.messages.error}
@@ -36,6 +40,7 @@ html
             block content
 
         script(src="dependencies/jquery/jquery.min.js")
+        script(src="dependencies/bootstrap/js/bootstrap-dropdown.js")
         script(src="dependencies/underscore/underscore-min.js")
         script(src="dependencies/backbone/backbone-min.js")
         script(src="js/main.js")

@@ -5,22 +5,23 @@
     var mongoose = require('mongoose')
         , flash = require('connect-flash')
         , auth = require('../services/authentication')
-		, Article = mongoose.model('Article');
+		, Post = mongoose.model('Article');
 
     exports.init = function (app) {
 
         app.get('/', function (req, res) {
 
-			return Article.find(function(err, articleList) {
+			return Post.find(function(err, posts) {
 
 				var data = {
-					title : 'Articles',
-					articleList : [],
+					title : 'My Blog',
+					posts : [],
 					user : req.user,
 					messages : req.flash()
 				};
+
 				if (!err){
-					data.articleList = articleList;
+					data.posts = posts;
 				}
 
 				return res.format({
@@ -57,8 +58,6 @@
             });
 
         });
-
-
 
     };
 

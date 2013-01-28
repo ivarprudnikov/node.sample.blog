@@ -2,22 +2,13 @@ extends layout
 
 block content
 
-    section#login
+    section#login.span4.offset4
 
-        h1 Log in
+        h1.center-text Log in
 
-        form(action="/login",method="post").form-horizontal
-            .control-group
-                label(for="username").control-label Username
-                .controls
-                    input(type='text',name='username')#username
-
-            .control-group
-                label(for="password").control-label Password
-                .controls
-                    input(type='password',name='password')#password
-
-            .form-actions
-                input(type='submit', value='Submit').btn.btn-primary
+        form(action="/login",method="post").form.well.well-large
+            input(type='text',name='username',placeholder='username',autofocus='autofocus')#username.input-block-level
+            input(type='password',name='password',placeholder='password')#password.input-block-level
+            input(type='submit', value='Submit').btn.btn-primary
 
         p.alert.alert-info Hint - user:user or admin:admin or superadmin:superadmin, each has corresponding role

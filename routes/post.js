@@ -6,14 +6,13 @@
         , auth = require('../services/authentication')
         , gridfs = require('../services/gridfs')
         , flash = require('connect-flash')
-        , Article = mongoose.model('Article');
+        , Post = mongoose.model('Article');
 
     exports.init = function (app) {
 
-
-        app.get('/article', function(req, res){
-          return Article.find(function(err, articleList) {
-              var data = { title: 'Articles', articleList : articleList, user:req.user, messages:req.flash() };
+        app.get('/post', function(req, res){
+          return Post.find(function(err, posts) {
+              var data = { title: 'Posts', posts : posts, user:req.user, messages:req.flash() };
               return res.format({
                   json: function(){
                       res.send(data);
@@ -22,19 +21,41 @@
           });
         });
 
-        app.get('/article/:id', function(req, res){
-          return Article.findById(req.params.id, function(err, article) {
+		app.get('/createPost', auth.require("ROLE_ADMIN"), function (req, res) {
+
+			var response = {
+				title : 'Create Post',
+				user : req.user,
+				messages : req.flash()
+			};
+
+			return res.format({
+
+				html: function(){
+					res.render('createPost', response);
+				},
+
+				json: function(){
+					res.send(response);
+				}
+
+			});
+
+		});
+
+        app.get('/post/:id', function(req, res){
+          return Post.findById(req.params.id, function(err, post) {
               if (!err) {
 				  return res.format({
 					  json: function(){
-						  res.send(article);
+						  res.send(post);
 					  }
 				  });
               }
           });
         });
 
-        app.get("/article/file/:id", function(req, res) {
+        app.get("/post/file/:id", function(req, res) {
             return gridfs.get(req.params.id, function(err, file) {
                 if (err) return console.log("Error : " + err);
                 res.header("Content-Type", file.contentType);
@@ -43,30 +64,30 @@
             });
         });
 
-        app.delete("/article/file/:id", auth.require("ROLE_ADMIN"), function(req, res) {
-            return Article.deleteFile(req.params.id, function(err, file) {
+        app.delete("/post/file/:id", auth.require("ROLE_ADMIN"), function(req, res) {
+            return Post.deleteFile(req.params.id, function(err, file) {
                 if (err) return console.log("Error : " + err);
                 return console.log("Deleted : " + file);
             });
         });
 
-        app.put('/article/:id', auth.require("ROLE_ADMIN"), function(req, res){
-          return Article.findById(req.params.id, function(err, article) {
-              article.title = req.body.title;
-              article.content = req.body.content;
-              article.author = req.body.author;
-              return article.save(function(err) {
+        app.put('/post/:id', auth.require("ROLE_ADMIN"), function(req, res){
+          return Post.findById(req.params.id, function(err, post) {
+			  post.title = req.body.title;
+			  post.content = req.body.content;
+			  post.author = req.body.author;
+              return post.save(function(err) {
                   if (!err) {
                       console.log("updated");
                   }
-                  return res.send(article);
+                  return res.send(post);
               });
           });
         });
 
-        app.post('/article', auth.require("ROLE_ADMIN"), function(req, res){
-            var article;
-            article = new Article({
+        app.post('/post', auth.require("ROLE_ADMIN"), function(req, res){
+            var post;
+			post = new Post({
               title: req.body.title,
               content: req.body.content,
               author: req.body.author
@@ -75,12 +96,12 @@
                 var opts = {
                     content_type: req.files.file.type
                 };
-                article.addFile(req.files.file, opts, function(err, result) {
+				post.addFile(req.files.file, opts, function(err, result) {
                     if (!err) console.log('File added : ' + req.files.file.name);
                     else console.log('File was not added');
                 });
             }
-            article.save(function(err) {
+			post.save(function(err) {
               if (!err) return console.log("created");
             });
 
@@ -89,14 +110,14 @@
 					res.redirect('/');
 				},
 				json: function(){
-					res.send(article);
+					res.send(post);
 				}
 			});
         });
 
-        app.delete('/article/:id', auth.require("ROLE_ADMIN"), function(req, res){
-          return Article.findById(req.params.id, function(err, article) {
-              return article.remove(function(err) {
+        app.delete('/post/:id', auth.require("ROLE_ADMIN"), function(req, res){
+          return Post.findById(req.params.id, function(err, post) {
+              return post.remove(function(err) {
                   if (!err) {
                       console.log("removed");
                       return res.send('')
