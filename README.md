@@ -62,4 +62,4 @@ to check running process `heroku ps`, to see logs `heroku logs`
 
 ## License
 
-Public Domain
+[MIT License](http://opensource.org/licenses/MIT)
