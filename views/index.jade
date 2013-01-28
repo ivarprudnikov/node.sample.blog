@@ -4,3 +4,44 @@ block content
 
     header
         h1= title
+
+        -if (user)
+            fieldset
+                legend Add Article
+                form(method="post", action="/article", enctype="multipart/form-data")
+                    .clearfix
+                        label Title
+                        .input: input(name="title", type="text")
+                    .clearfix
+                        label Content
+                        .input: input(name="content", type="text")
+                    .clearfix
+                        label Author
+                        .input: input(name="author", type="text")
+                    .clearfix
+                        label File
+                        .input: input(type="file", name="file")
+                    .actions
+                    input.btn(type="submit")
+
+        table.zebra-striped.bordered-table
+            thead
+                tr
+                    th Title
+                    th Content
+                    th Author
+                    th Filename
+                    th Filetype
+                    th File Upload Date
+            - each article in articleList
+                tr
+                    td= article.title
+                    td= article.content
+                    td= article.author
+                    - if(article.files.length > 0)
+                        td
+                            a(href="/article/file/#{article.files[0]._id}")=article.files[0].filename
+                        td= article.files[0].contentType
+                        td= article.files[0].uploadDate
+                    - else
+                        td(collspan=3)= "No files attached"

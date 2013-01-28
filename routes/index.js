@@ -4,31 +4,45 @@
 
     var mongoose = require('mongoose')
         , flash = require('connect-flash')
-        , auth = require('../services/authentication');
+        , auth = require('../services/authentication')
+		, Article = mongoose.model('Article');
 
     exports.init = function (app) {
 
         app.get('/', function (req, res) {
 
-            var response = {'title': 'Blog', user: req.user, messages:req.flash()};
+			return Article.find(function(err, articleList) {
 
-            return res.format({
+				var data = {
+					title : 'Articles',
+					articleList : [],
+					user : req.user,
+					messages : req.flash()
+				};
+				if (!err){
+					data.articleList = articleList;
+				}
 
-                html: function(){
-                    res.render('index', response);
-                },
+				return res.format({
+					html: function(){
+						res.render('index', data);
+					},
+					json: function(){
+						res.send(data);
+					}
+				});
 
-                json: function(){
-                    res.send(response);
-                }
-
-            });
+			});
 
         });
 
         app.get('/account', auth.require("ROLE_ADMIN"), function (req, res) {
 
-            var response = {'title': 'Account', user: req.user, messages:req.flash()};
+            var response = {
+				title : 'Account',
+				user : req.user,
+				messages : req.flash()
+			};
 
             return res.format({
 

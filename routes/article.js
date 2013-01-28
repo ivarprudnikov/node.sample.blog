@@ -13,28 +13,23 @@
 
         app.get('/article', function(req, res){
           return Article.find(function(err, articleList) {
-
               var data = { title: 'Articles', articleList : articleList, user:req.user, messages:req.flash() };
-
               return res.format({
-                  html: function(){
-                      res.render('article', data);
-                  },
-
                   json: function(){
                       res.send(data);
                   }
-
               });
-
           });
-
         });
 
         app.get('/article/:id', function(req, res){
           return Article.findById(req.params.id, function(err, article) {
               if (!err) {
-                  return res.send(article);
+				  return res.format({
+					  json: function(){
+						  res.send(article);
+					  }
+				  });
               }
           });
         });
@@ -88,7 +83,15 @@
             article.save(function(err) {
               if (!err) return console.log("created");
             });
-            return res.send(article);
+
+			res.format({
+				html: function(){
+					res.redirect('/');
+				},
+				json: function(){
+					res.send(article);
+				}
+			});
         });
 
         app.delete('/article/:id', auth.require("ROLE_ADMIN"), function(req, res){

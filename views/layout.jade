@@ -15,7 +15,6 @@ html
                 - if (locals.user)
                     li: span.navbar-text Hi, #{user.username}
                 li: a(href="/") Home
-                li: a(href="/article") Blog
                 li.divider-vertical
                 - if (!locals.user)
                     li: a(href="/login") Login
