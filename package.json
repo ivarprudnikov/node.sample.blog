@@ -1,9 +1,14 @@
 {
   "name": "node.sample.blog",
   "author": "Ivar Prudnikov <aprudnikovas@yahoo.com>",
-  "repository": "git://github.com/aprudnikovas/node.sample.blog",
+  "description" : "Sample blog with Express / Mongoose / Passport. Plus file upload and roles secured urls",
+  "keywords" : ["blog"],
   "version": "0.0.1",
   "private": true,
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/aprudnikovas/node.sample.blog.git"
+  },
   "scripts": {
     "prestart": "bower install",
     "start": "node app",
