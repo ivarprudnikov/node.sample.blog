@@ -11,20 +11,20 @@
 
         app.get(['/','/index'], function (req, res) {
 
-			var query = Post.find().sort({_id:-1}).skip(0).limit(5),
+			var queryFind = Post.find().sort({_id:-1}),
+				queryCount = Post.count(),
 				data = {
 					title : 'My Blog',
 					posts : [],
+					postsCount : 0,
 					user : req.user,
-					messages : req.flash()
+					messages : req.flash(),
+					skip : parseInt(req.query.skip,10) > 0 ? parseInt(req.query.skip,10) : 0,
+					limit : Math.min( parseInt(req.query.limit,10) > 0 ? parseInt(req.query.limit,10) : 5, 10),
+					hasMore : false
 				};
 
-			query.exec(function(err, posts) {
-
-				if (!err){
-					data.posts = posts;
-				}
-
+			function returnResponse(){
 				return res.format({
 					html: function(){
 						res.render('index', data);
@@ -33,8 +33,26 @@
 						res.send(data);
 					}
 				});
+			}
 
-			});
+			function handleCount(err,count){
+				if (err === null) {
+					data.postsCount = count;
+				}
+				if (err === null && count > data.skip) {
+					data.hasMore = (count - data.skip - data.limit) > 0;
+					queryFind.skip(data.skip).limit(data.limit).exec(function(err, posts) {
+						if ( err === null ){
+							data.posts = posts;
+						}
+						returnResponse();
+					});
+				} else {
+					returnResponse();
+				}
+			}
+
+			queryCount.exec(handleCount);
 
         });
 

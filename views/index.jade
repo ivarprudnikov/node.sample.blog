@@ -4,7 +4,7 @@ block content
 
     - if(posts.length > 0)
         - each post in posts
-            section.span8.offset2
+            .row: section.span8.offset2
                 header
                     h2 #{post.title}
                         small  #{post._id.getTimestamp().toDateString()}
@@ -17,5 +17,17 @@ block content
 
                 hr
     - else
-        .alert.alert-info There are no posts to show.
+        .row: .alert.alert-info There are no posts to show.
+
+    .row: section.span8.offset2: ul.pager
+        - if(skip > 0)
+            li.previous: a(href='/?skip=#{skip - limit}&limit=#{limit}') Older
+        - else
+            li.previous.disabled: a Newer
+        - if(hasMore)
+            li.next: a(href='/?skip=#{skip + posts.length}&limit=#{limit}') Older
+        - else
+            li.next.disabled: a Older
+
+    .row: section.span8.offset2: .alert.alert-info Total: #{postsCount}, showing #{skip} through #{skip + posts.length}
 
