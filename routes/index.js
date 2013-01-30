@@ -9,16 +9,17 @@
 
     exports.init = function (app) {
 
-        app.get('/', function (req, res) {
+        app.get(['/','/index'], function (req, res) {
 
-			return Post.find(function(err, posts) {
-
-				var data = {
+			var query = Post.find().sort({_id:-1}).skip(0).limit(5),
+				data = {
 					title : 'My Blog',
 					posts : [],
 					user : req.user,
 					messages : req.flash()
 				};
+
+			query.exec(function(err, posts) {
 
 				if (!err){
 					data.posts = posts;

@@ -2,13 +2,20 @@ extends layout
 
 block content
 
-    - each post in posts
-        section.span8.offset2
-            header
-                h2 #{post.title}
-                    small  #{post.author}
+    - if(posts.length > 0)
+        - each post in posts
+            section.span8.offset2
+                header
+                    h2 #{post.title}
+                        small  #{post._id.getTimestamp().toDateString()}
 
-            section!= post.content
+                - if(post.files.length > 0)
+                    img(src='/post/file/#{post.files[0]._id}')
+                    a(href="/post/file/#{post.files[0]._id}")=post.files[0].filename
 
-            - if(post.files.length > 0)
-                footer: a(href="/post/file/#{post.files[0]._id}")=post.files[0].filename
+                section!= post.content
+
+                hr
+    - else
+        .alert.alert-info There are no posts to show.
+

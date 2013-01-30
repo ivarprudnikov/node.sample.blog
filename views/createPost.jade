@@ -4,9 +4,18 @@ block content
 
     fieldset
         legend Add Post
-        form(method="post", action="/post", enctype="multipart/form-data").form.well
-            input(name="title", type="text", placeholder="Title")
-            input(name="author", type="text" , placeholder="Author")
-            textarea(name="content", rows="5" , placeholder="Content")
-            input(type="file", name="file")
-            input.btn.btn-primary(type="submit")
+        form(method="post", action="/post", enctype="multipart/form-data").form-horizontal
+            .control-group
+                label.control-label Title
+                .controls: input(name="title", type="text", placeholder="Title")
+            .control-group
+                label.control-label Author
+                .controls: input(name="author", type="text" , placeholder="Author")
+            .control-group
+                label.control-label Content
+                .controls: textarea(name="content", rows="5" , placeholder="Content").span5
+            .control-group
+                label.control-label Image
+                .controls: input(type="file", name="file")
+            .form-actions
+                input.btn.btn-primary(type="submit")
