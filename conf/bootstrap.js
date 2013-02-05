@@ -16,8 +16,7 @@
 
     exports.init = function (app) {
 
-        var Article = mongoose.model('Article')
-            , User = mongoose.model('User')
+        var User = mongoose.model('User')
             , Role = mongoose.model('Role');
 
         var createDevRoles = function(cb){

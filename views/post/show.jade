@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+
+    - if(post)
+
+        .row: section.span8.offset2
+            header
+                h2 #{post.title}
+                    small  #{post._id.getTimestamp().toDateString()}
+
+            - if(post.files.length > 0)
+                img(src='/post/file/#{post.files[0]._id}')
+                a(href="/post/file/#{post.files[0]._id}")=post.files[0].filename
+
+            section!= post.content
+
+    - else
+        .alert.alert-danger Resource does not exist

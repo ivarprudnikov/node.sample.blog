@@ -1,10 +1,10 @@
-extends layout
+extends ../layout
 
 block content
 
     fieldset
-        legend Add Post
-        form(method="post", action="/post", enctype="multipart/form-data").form-horizontal
+        legend Create Post
+        form(method="post", action="/post/save", enctype="multipart/form-data").form-horizontal
             .control-group
                 label.control-label Title
                 .controls: input(name="title", type="text", placeholder="Title")

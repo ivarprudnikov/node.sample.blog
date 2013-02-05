@@ -5,7 +5,7 @@
     var mongoose = require('mongoose')
         , flash = require('connect-flash')
         , auth = require('../services/authentication')
-		, Post = mongoose.model('Article');
+		, Post = mongoose.model('Post');
 
     exports.init = function (app) {
 

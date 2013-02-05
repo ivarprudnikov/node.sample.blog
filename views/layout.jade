@@ -5,7 +5,7 @@ html
             title #{title}
         - else
             title My Blog
-        link(rel='stylesheet', href='stylesheets/styles.css')
+        link(rel='stylesheet', href='/stylesheets/styles.css')
         link(href='http://fonts.googleapis.com/css?family=Open+Sans|Droid+Sans',rel='stylesheet',type='text/css')
 
     body
@@ -20,13 +20,17 @@ html
                 - if (!locals.user)
                     li: a(href="/login") Login
                 - else
-
+                    li.dropdown
+                        a(href="#", data-toggle="dropdown").dropdown-toggle Post
+                            b.caret
+                        ul.dropdown-menu
+                            li: a(href="/post/list") Post list
+                            li: a(href="/post/create") Post create
                     li.dropdown
                         a(href="#", data-toggle="dropdown").dropdown-toggle Account
                             b.caret
                         ul.dropdown-menu
                             li: a(href="/account") Account
-                            li: a(href="/createPost") Add new post
                             li.divider
                             li: a(href="/logout") Logout
 
@@ -43,8 +47,8 @@ html
             span sample node.js blog 2013 |
             a(href='https://github.com/aprudnikovas/node.sample.blog')  github
 
-        script(src="dependencies/jquery/jquery.min.js")
-        script(src="dependencies/bootstrap/js/bootstrap-dropdown.js")
-        script(src="dependencies/underscore/underscore-min.js")
-        script(src="dependencies/backbone/backbone-min.js")
-        script(src="js/main.js")
+        script(src="/dependencies/jquery/jquery.min.js")
+        script(src="/dependencies/bootstrap/js/bootstrap-dropdown.js")
+        script(src="/dependencies/underscore/underscore-min.js")
+        script(src="/dependencies/backbone/backbone-min.js")
+        script(src="/js/main.js")
