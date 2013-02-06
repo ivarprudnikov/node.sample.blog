@@ -3,11 +3,9 @@ node.sample.blog
 
 [![Build Status](https://travis-ci.org/aprudnikovas/node.sample.blog.png?branch=master)](https://travis-ci.org/aprudnikovas/node.sample.blog)
 
-....... In progress ........
-
 ## Introduction
 
-Purpose: to have authentication ready, file upload ready, well structured node app for quick dev needs.
+Node app (blog) boilerplate. Role protected routes, integrated bootstrap. File structure inspired by [grails](http://grails.org/).
 
 ## Dependencies
 
