@@ -3,25 +3,34 @@ extends ../layout
 block content
 
     - if(post)
+        .row
+            fieldset.span8
+                legend Edit Post
+                form(method="post", action="/post/update/#{post.id}", enctype="multipart/form-data").form-horizontal
 
-        fieldset
-            legend Create Post
-            form(method="post", action="/post/update/#{post.id}", enctype="multipart/form-data").form-horizontal
+                    .control-group
+                        label.control-label Title
+                        .controls: input(name="title", type="text", placeholder="Title", value="#{post.title}")
+                    .control-group
+                        label.control-label Author
+                        .controls: input(name="author", type="text" , placeholder="Author", value="#{post.author}")
+                    .control-group
+                        label.control-label Content
+                        .controls: textarea(name="content", rows="10" , placeholder="Content").span5= post.content
+                    .control-group
+                        label.control-label Add Image
+                        .controls: input(type="file", name="file")
+                    .form-actions
+                        input.btn.btn-primary(type="submit")
 
-                .control-group
-                    label.control-label Title
-                    .controls: input(name="title", type="text", placeholder="Title", value="#{post.title}")
-                .control-group
-                    label.control-label Author
-                    .controls: input(name="author", type="text" , placeholder="Author", value="#{post.author}")
-                .control-group
-                    label.control-label Content
-                    .controls: textarea(name="content", rows="5" , placeholder="Content").span5= post.content
-                .control-group
-                    label.control-label Image
-                    .controls: input(type="file", name="file")
-                .form-actions
-                    input.btn.btn-primary(type="submit")
+            fieldset.span4
+                legend Manage files
+                .row
+                    - if(post.files && post.files.length > 0)
+                        - each file in post.files
+                            .span2: img(src='/file/show/#{file._id}')
+
+
     - else
 
         .alert.alert-danger Resource does not exist

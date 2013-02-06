@@ -10,8 +10,9 @@ block content
                     small  #{post._id.getTimestamp().toDateString()}
 
             - if(post.files.length > 0)
-                img(src='/post/file/#{post.files[0]._id}')
-                a(href="/post/file/#{post.files[0]._id}")=post.files[0].filename
+                - each file in post.files
+                    p: img(src='/file/show/#{file._id}')
+                    p: a(href="/file/show/#{file._id}")=file.filename
 
             section!= post.content
 

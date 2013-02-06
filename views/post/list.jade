@@ -11,6 +11,7 @@ block content
                     th Author
                     th Image
                     th Edit
+                    th Delete
             tbody
                 - each post in posts
                     tr
@@ -22,6 +23,8 @@ block content
                         - else
                             td No
                         td: a(href="/post/edit/#{post._id}").btn.btn-primary Edit
+                        td: form(method="post", action="/post/delete/#{post.id}")
+                            input.btn.btn-danger(type="submit",value="Delete")
     - else
         .alert.alert-info There are no posts to show.
 
@@ -35,5 +38,5 @@ block content
         - else
             li.next.disabled: a Older
 
-    .row: section.span8.offset2: .alert.alert-info Total: #{postsCount}, showing #{skip} through #{skip + posts.length}
+    .row: section.span8.offset2: p.muted Total: #{postsCount}, showing #{skip} through #{skip + posts.length}
 

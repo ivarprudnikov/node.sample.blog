@@ -10,8 +10,8 @@ block content
                         small  #{post._id.getTimestamp().toDateString()}
 
                 - if(post.files.length > 0)
-                    img(src='/post/file/#{post.files[0]._id}')
-                    a(href="/post/file/#{post.files[0]._id}")=post.files[0].filename
+                    p: a(href="/post/show/#{post._id}")
+                        img(src='/file/show/#{post.files[0]._id}',title='#{post.files[0].filename}')
 
                 section!= post.content
 
@@ -29,5 +29,5 @@ block content
         - else
             li.next.disabled: a Older
 
-    .row: section.span8.offset2: .alert.alert-info Total: #{postsCount}, showing #{skip} through #{skip + posts.length}
+    .row: section.span8.offset2: p.muted Total: #{postsCount}, showing #{skip} through #{skip + posts.length}
 
